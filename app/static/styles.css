@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.filtro-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.filtro-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filtro-container input[type="text"],
+.filtro-container input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.filtro-container button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    float: right;
+}
+
+.filtro-container button:hover {
+    background-color: #45a049;
+}
+
+#tabela-contas {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#tabela-contas th, #tabela-contas td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tabela-contas th {
+    background-color: #f2f2f2;
+}
+
+#tabela-contas tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tabela-contas tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#tabela-contas button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+}
+
+#tabela-contas button:hover {
+    background-color: #45a049;
+}

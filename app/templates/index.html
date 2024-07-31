@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Contas Recebidas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="filtro-container">
+        <h1>Pesquise</h1>
+        <form id="form-filtro" action="/buscar_contas" method="GET">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.empresa.label }}<br>
+                {{ form.empresa() }}
+            </p>
+            <p>
+                {{ form.data_inicial.label }}<br>
+                {{ form.data_inicial(size=32) }}
+            </p>
+            <p>
+                {{ form.data_final.label }}<br>
+                {{ form.data_final(size=32) }}
+            </p>
+            <p>
+                {{ form.pesquisar() }}
+            </p>
+        </form>
+        <br>
+        <label for="filter">Filtro:</label>
+        <input type="text" id="filter" onkeyup="filterTable()" placeholder="Digite para filtrar...">
+    </div>
+
+    <div id="tabela-container">
+        <h1>Contas Recebidas</h1>
+        <form id="dataForm" method="post" action="/processar_selecionados">
+            <table id="tabela-contas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Tipo Recebimento</th>
+                        <th>Data Vencimento</th>
+                        <th>Data Pagamento</th>
+                        <th>Valor</th>
+                        <th>Data Competência</th>
+                        <th>Selecionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        <td><input type="hidden" name="data[{{ loop.index }}][ID]" value="{{ item.ID }}">{{ item.ID }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][Pessoa.NomeExibicao]" value="{{ item['Pessoa.NomeExibicao'] }}">{{ item['Pessoa.NomeExibicao'] }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][Pessoa.TelefonePrincipal]" value="{{ item['Pessoa.TelefonePrincipal'] }}">{{ item['Pessoa.TelefonePrincipal'] }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][Pessoa.EmailPrincipal]" value="{{ item['Pessoa.EmailPrincipal'] }}">{{ item['Pessoa.EmailPrincipal'] }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][NomeTipoReceb]" value="{{ item.NomeTipoReceb }}">{{ item.NomeTipoReceb }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][DtaVenc]" value="{{ item.DtaVenc }}">{{ item.DtaVenc }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][DtaPagto]" value="{{ item.DtaPagto }}">{{ item.DtaPagto }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][VlrVenc]" value="{{ item.VlrVenc }}">{{ item.VlrVenc }}</td>
+                        <td><input type="hidden" name="data[{{ loop.index }}][DtaCompet]" value="{{ item.DtaCompet }}">{{ item.DtaCompet }}</td>
+                        <td><input type="checkbox" name="selecionar" value="{{ loop.index }}"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Processar Selecionados</button>
+        </form>
+    </div>
+    <script>
+        function filterTable() {
+            const input = document.getElementById('filter');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('tabela-contas');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                tr[i].style.display = 'none';
+                const td = tr[i].getElementsByTagName('td');
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+                            tr[i].style.display = '';
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
