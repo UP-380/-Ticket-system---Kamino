@@ -173,20 +173,22 @@ def processar_selecionados():
                     # Envio de e-mail automatico
 
                     email_senha = open('pass.txt', 'r').read()
-                    email_origem = 'rabelopires12@gmail.com'
-                    email_destino = ('natarabelo0@gmail.com')
-
-                    assunto = 'Teste de envio de email com Python'
-                    body = open('corpo_email.txt', 'r').read()
+                    email_origem = 'boleto.e.nfe@gmail.com'
+                    
+                    assunto = open('assunto_email.html', 'r').read()
+                    if empresaGeradora == "unymos":
+                        body = open('corpo_email_unymos.html', 'r').read()
+                    if empresaGeradora == 'up380':
+                        body = open('corpo_email_up380.html', 'r').read()
 
                     mensagem = EmailMessage()
                     email_destinatario = selected_item['Email']
-                    print(email_destinatario)
+                    email_destino = (email_destinatario)
                     mensagem["From"] = email_origem
                     mensagem["To"] = email_destino
                     mensagem["Subject"] = assunto
 
-                    mensagem.set_content(body)
+                    mensagem.add_alternative(body, subtype='html')
                     safe = ssl.create_default_context()
 
                     anexo_path = pdf_filename
